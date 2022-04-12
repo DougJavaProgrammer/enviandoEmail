@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest {
+public class AppTest2 {
 
 	private String userName = JOptionPane.showInputDialog("Digite o usuário do GMAIL: ");
 	private String password = JOptionPane.showInputDialog("Digite a senha de " + userName);
@@ -60,7 +60,7 @@ public class AppTest {
 			JOptionPane.showInternalMessageDialog(null, "E-mail enviado com sucesso");
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(null, "Falha catastrófica: \n"+ e.getMessage());
 			e.printStackTrace();
 
 		}
