@@ -31,6 +31,7 @@ public class AppTest2 {
 			// verificar as configurações SMTP do seu provedor e email;
 
 			Properties properties = new Properties();
+			properties.put("mail.smtp.ssl.trust","*"); //autenticação SSL
 			properties.put("mail.smtp.auth", "true"); // autorização
 			properties.put("mail.smtp.starttls", "true"); // autenticação
 			properties.put("mail.smtp.host", "smtp.gmail.com"); // servidor Gmail Google
@@ -51,7 +52,7 @@ public class AppTest2 {
 			Address[] toUser = InternetAddress.parse(JOptionPane.showInputDialog("Digite o destinatário: "));
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(userName)); // origem do email, ou seja, quem envia
+			message.setFrom(new InternetAddress(userName, "Douglas JavaProgrammer")); // origem do email, ou seja, quem envia
 			message.setRecipients(Message.RecipientType.TO, toUser); // email de destino
 			message.setSubject(JOptionPane.showInputDialog("Digite o assunto: ")); // assunto do email
 			message.setText(JOptionPane.showInputDialog("Digite a mensagem: "));
