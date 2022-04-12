@@ -10,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 import org.junit.Test;
 
@@ -18,8 +19,8 @@ import org.junit.Test;
  */
 public class AppTest {
 
-	private String userName = "dougmoroli@gmail.com";
-	private String password = "endehe76";
+	private String userName = JOptionPane.showInputDialog("Digite o usuário do GMAIL: ");
+	private String password = JOptionPane.showInputDialog("Digite a senha de " + userName);
 
 	@Test // marcado como teste para poder rodar o código e efetuar teste, não sendo
 			// necessário método main
@@ -47,18 +48,21 @@ public class AppTest {
 				}
 			});
 
-			Address[] toUser = InternetAddress.parse("dougmoroli@gmail.com, alinetayla@gmail.com");
+			Address[] toUser = InternetAddress.parse(JOptionPane.showInputDialog("Digite o destinatário: "));
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(userName)); // origem do email, ou seja, quem envia
 			message.setRecipients(Message.RecipientType.TO, toUser); // email de destino
-			message.setSubject("Email enviando usando JAVA"); // assunto do email
-			message.setText("Olá, isso é um teste de envio de email usando programação Java");
+			message.setSubject(JOptionPane.showInputDialog("Digite o assunto: ")); // assunto do email
+			message.setText(JOptionPane.showInputDialog("Digite a mensagem: "));
 
 			Transport.send(message);
+			JOptionPane.showInternalMessageDialog(null, "E-mail enviado com sucesso");
 
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 			e.printStackTrace();
+
 		}
 	}
 }
