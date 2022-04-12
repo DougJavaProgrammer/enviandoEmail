@@ -2,9 +2,14 @@ package enviando.email;
 
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.junit.Test;
 
@@ -13,14 +18,12 @@ import org.junit.Test;
  */
 public class AppTest {
 
-
 	private String userName = "dougmoroli@gmail.com";
 	private String password = "endehe76";
-	
-	
+
 	@Test // marcado como teste para poder rodar o código e efetuar teste, não sendo
 			// necessário método main
-	
+
 	public void testeEmail() {
 
 		try {
@@ -43,8 +46,16 @@ public class AppTest {
 					return new PasswordAuthentication(userName, password);
 				}
 			});
-			
-			System.out.println(session);
+
+			Address[] toUser = InternetAddress.parse("dougmoroli@gmail.com, alinetayla@gmail.com");
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(userName)); // origem do email, ou seja, quem envia
+			message.setRecipients(Message.RecipientType.TO, toUser); // email de destino
+			message.setSubject("Email enviando usando JAVA"); // assunto do email
+			message.setText("Olá, isso é um teste de envio de email usando programação Java");
+
+			Transport.send(message);
 
 		} catch (Exception e) {
 			e.printStackTrace();
