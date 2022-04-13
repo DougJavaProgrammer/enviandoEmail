@@ -14,14 +14,16 @@ import javax.swing.JOptionPane;
 
 public class ObjetoEnviaEmail {
 
-	private String userName = JOptionPane.showInputDialog("Digite o usuário do GMAIL: ");
-	private String password = JOptionPane.showInputDialog("Digite a senha de " + userName);
-	private String listaDestinatarios = JOptionPane.showInputDialog("Digite o email de destino: ");	
+	private String userName = "";
+	private String password = "";
+	private String listaDestinatarios = "";	
 	private String nomeRemetente = "";
 	private String assuntoEmail = "";
 	private String mensagemEmail = "";
 	
-	public ObjetoEnviaEmail(String listaDestinario, String nomeRemetente, String assuntoEmail, String mensagemEmail) {
+	public ObjetoEnviaEmail(String userName, String password, String listaDestinario, String nomeRemetente, String assuntoEmail, String mensagemEmail) {
+		this.userName = userName;
+		this.password = password;
 		this.listaDestinatarios = listaDestinario;
 		this.nomeRemetente = nomeRemetente;
 		this.assuntoEmail = assuntoEmail;

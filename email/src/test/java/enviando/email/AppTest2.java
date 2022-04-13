@@ -1,15 +1,5 @@
 package enviando.email;
 
-import java.util.Properties;
-
-import javax.mail.Address;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 import org.junit.Test;
@@ -26,10 +16,11 @@ public class AppTest2 {
 
 		try {
 
-			ObjetoEnviaEmail enviaEmail = new ObjetoEnviaEmail(JOptionPane.showInputDialog("Destinatátio: "),
-					JOptionPane.showInputDialog("Nome do remetente: "), JOptionPane.showInputDialog("Assunto: "),
-					JOptionPane.showInputDialog("Mensagem: "));
-			
+			ObjetoEnviaEmail enviaEmail = new ObjetoEnviaEmail(JOptionPane.showInputDialog("Digite o usuário GMAIL: "),
+					JOptionPane.showInputDialog("Digite a senha do usuário: "),
+					JOptionPane.showInputDialog("Destinatário: "), JOptionPane.showInputDialog("Nome do remetente: "),
+					JOptionPane.showInputDialog("Assunto: "), JOptionPane.showInputDialog("Texto do email: "));
+
 			enviaEmail.enviarEmail();
 
 		} catch (Exception e) {
