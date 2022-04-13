@@ -16,12 +16,13 @@ public class ObjetoEnviaEmail {
 
 	private String userName = "";
 	private String password = "";
-	private String listaDestinatarios = "";	
+	private String listaDestinatarios = "";
 	private String nomeRemetente = "";
 	private String assuntoEmail = "";
 	private String mensagemEmail = "";
-	
-	public ObjetoEnviaEmail(String userName, String password, String listaDestinario, String nomeRemetente, String assuntoEmail, String mensagemEmail) {
+
+	public ObjetoEnviaEmail(String userName, String password, String listaDestinario, String nomeRemetente,
+			String assuntoEmail, String mensagemEmail) {
 		this.userName = userName;
 		this.password = password;
 		this.listaDestinatarios = listaDestinario;
@@ -29,8 +30,8 @@ public class ObjetoEnviaEmail {
 		this.assuntoEmail = assuntoEmail;
 		this.mensagemEmail = mensagemEmail;
 	}
-	
-	public void enviarEmail() throws Exception {
+
+	public void enviarEmail(boolean envioHtml) throws Exception {
 		Properties properties = new Properties();
 		properties.put("mail.smtp.ssl.trust", "*"); // autenticação SSL
 		properties.put("mail.smtp.auth", "true"); // autorização
@@ -54,11 +55,15 @@ public class ObjetoEnviaEmail {
 
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(userName, nomeRemetente)); // origem do email, ou seja, quem
-																					// envia
+																		// envia
 		message.setRecipients(Message.RecipientType.TO, toUser); // email de destino
 		message.setSubject(assuntoEmail); // assunto do email
-		message.setText(mensagemEmail);
+		if (envioHtml) {
+			message.setContent(mensagemEmail, "text/html; charset=utf-8");
+		} else {
 
+			message.setText(mensagemEmail);
+		}
 		Transport.send(message);
 		JOptionPane.showInternalMessageDialog(null, "E-mail enviado com sucesso");
 	}
