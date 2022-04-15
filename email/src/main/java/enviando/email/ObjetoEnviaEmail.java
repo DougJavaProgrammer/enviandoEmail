@@ -1,5 +1,8 @@
 package enviando.email;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -11,6 +14,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class ObjetoEnviaEmail {
 
@@ -66,6 +73,23 @@ public class ObjetoEnviaEmail {
 		}
 		Transport.send(message);
 		JOptionPane.showInternalMessageDialog(null, "E-mail enviado com sucesso");
+
+		// Esse método simula o PDF ou qualquer arquivo que possa ser enviado em anexo
+		// por email
+		// Pode pegar o arquivo no banco de dados base64, byte[], stream de arquivos
+
+	}
+
+	private FileInputStream simuladorDePDF() throws Exception {
+		Document document = new Document();
+		File file = new File("FileAnexo.pdf");
+		file.createNewFile();
+		PdfWriter.getInstance(document, new FileOutputStream(file));
+		document.open();
+		document.add(new Paragraph("Conteúdo do PDF anexo com JavaMail"));
+		document.close();
+
+		return new FileInputStream(file);
 	}
 
 }
