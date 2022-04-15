@@ -31,7 +31,7 @@ public class AppTest2 {
 					JOptionPane.showInputDialog("Destinatário: "), JOptionPane.showInputDialog("Nome do remetente: "),
 					JOptionPane.showInputDialog("Assunto: "), stringBuilderTextoEmail.toString());
 
-			enviaEmail.enviarEmail(true);
+			enviaEmail.enviarEmailAenxo(true);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Falha catastrófica: \n" + e.getMessage());
