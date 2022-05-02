@@ -3,6 +3,9 @@ package enviando.email;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -84,7 +87,7 @@ public class ObjetoEnviaEmail {
 		// Pode pegar o arquivo no banco de dados base64, byte[], stream de arquivos
 
 	}
-	
+
 	public void enviarEmailAenxo(boolean envioHtml) throws Exception {
 		Properties properties = new Properties();
 		properties.put("mail.smtp.ssl.trust", "*"); // autenticação SSL
@@ -112,32 +115,40 @@ public class ObjetoEnviaEmail {
 																		// envia
 		message.setRecipients(Message.RecipientType.TO, toUser); // email de destino
 		message.setSubject(assuntoEmail); // assunto do email
-		
-		//Parte 1 do Email que o texto e descrição do email
+
+		// Parte 1 do Email que o texto e descrição do email
 		MimeBodyPart corpoEmail = new MimeBodyPart();
-		
-		
-		
+
 		if (envioHtml) {
 			corpoEmail.setContent(mensagemEmail, "text/html; charset=utf-8");
 		} else {
 
 			corpoEmail.setText(mensagemEmail);
-		
-						
+
 		}
-		
-		//Parte 2 do Email que são os anexos
-		MimeBodyPart anexoEmail = new MimeBodyPart();
-		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "application/pdf")));
-		anexoEmail.setFileName("anexoEmail.pdf");
-		
+		List<FileInputStream> arquivos = new ArrayList<FileInputStream>();
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
+
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(corpoEmail);
-		multipart.addBodyPart(anexoEmail);
 		
+		int index = 0;
+		for (FileInputStream fileInputStream : arquivos) {
+
+			// Parte 2 do Email que são os anexos
+			MimeBodyPart anexoEmail = new MimeBodyPart();
+			anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(fileInputStream, "application/pdf")));
+			anexoEmail.setFileName("anexoEmail"+index+".pdf");
+
+			multipart.addBodyPart(anexoEmail);
+			index ++;
+		}
+
 		message.setContent(multipart);
-		
+
 		Transport.send(message);
 		JOptionPane.showInternalMessageDialog(null, "E-mail enviado com sucesso");
 
